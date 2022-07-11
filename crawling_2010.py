@@ -15,7 +15,8 @@ import copy
 import itertools
 from collections import Counter
 
-pat_num = pd.read_csv('C:/Users/yebin/OneDrive/바탕 화면/졸업연구/3차_2205_2/데이터/google/gp-2010.csv', encoding='utf8')
+
+pat_num = pd.read_excel('C:/Users/user/Documents/GitHub/USPTO_crawling/data/search_data/01. gp-search-TI and AB (Virtual world, Virtual environment) or All (Metaverse) (2012_ 2021, 65개 기업).xlsx')
 pat_nums = [i.split('-')[1] for i in pat_num['id']]
 
 #%% uspto에서 특허 정보 수집
@@ -47,11 +48,14 @@ for n, i in enumerate(tqdm(pat_nums)):
     except TypeError:
         pass
 #%%filtering by patent type (we need utility type patent only!!)
+test = pd.DataFrame(pt_dict_list)
+test["assignee"]= pat_num["assignee"]
+patent_df = test[test["patent_type"]=='utility']
+
+'''
 util_patent = [i for i in pt_dict_list if i['patent_type'] == 'utility']
 print("특허 수: ", len(util_patent))
-
-first_patent_df = pd.DataFrame.from_dict(util_patent)
-
+'''
 #%% FC 승인된지 5년이내 FC 수
 def AAFC(util_patent):
     all_fp_list = []
@@ -80,10 +84,9 @@ def AAFC(util_patent):
     return all_fp_list_length
 
 aafc = AAFC(util_patent)
-
-#%%
 patent = first_patent_df.assign(AAFC = aafc)
-patent.to_excel('C:/Users/yebin/OneDrive/바탕 화면/졸업연구/3차_2205_2/데이터/uspto/patent_2010.xlsx', encoding='utf8', index=False)
+#%%
+patent_df.to_excel('C:/Users/user/Documents/GitHub/USPTO_crawling/data/ouput_data/patent_1155.xlsx', encoding='utf8', index=False)
 
 
 
