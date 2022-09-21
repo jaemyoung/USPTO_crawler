@@ -1,4 +1,4 @@
-### USPTO_crawling 방법
+### USPTO_crawling
 
 ## 1. USPTO의 API를 활용한 Patents 검색
 
