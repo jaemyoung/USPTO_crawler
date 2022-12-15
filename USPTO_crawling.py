@@ -39,15 +39,16 @@ def patent_crawling(pat_nums):
     return pt_dict_list
 
 #%% 특허 추출
-pat_num = pd.read_excel('C:/Users/user/Documents/GitHub/USPTO_crawling/data/search_data/01. gp-search-TI and AB (Virtual world, Virtual environment) or All (Metaverse) (2012_ 2021, 65개 기업).xlsx')
+pat_num = pd.read_excel('C:/Users/user/Documents/GitHub/USPTO_crawling/data/search_data/[작업중] TI, AB (virtual world, environment, reality) (4,099개).xlsx')
 pat_nums = [i.split('-')[1] for i in pat_num['id']]
 
 # 함수 실행 후 dataframe으로 변환 후 데이터 저장
 patent_df = pd.DataFrame(patent_crawling(pat_nums))
-patent_df = patents_df[patent_df["patent_type"]=='utility'] # fiitering utility
+patent_df1 = patent_df[patent_df["patent_type"]=='utility'] # fiitering utility
 
 # excel 파일로 저장 
-patent_df.to_excel('', encoding='utf8', index=False)
+patent_df.to_excel('C:/Users/user/Documents/GitHub/USPTO_crawling/data/ouput_data/백춘삼 박사님/patents_3608.xlsx', encoding='utf8', index=False)
+
 
 #%% cited 관계 특허 추출 
 pat_num = pd.read_excel('C:/Users/user/Documents/GitHub/USPTO_crawling/data/ouput_data/patent_1155(+cited_patents).xlsx')
